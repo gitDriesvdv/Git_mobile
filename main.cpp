@@ -9,7 +9,7 @@ int main(int argc, char *argv[])
     QQuickView view;
     view.setResizeMode(QQuickView::SizeRootObjectToView);
     QObject::connect(view.engine(), SIGNAL(quit()), qApp, SLOT(quit()));
-    view.setSource(QUrl("qrc:///main.qml"));
+    view.setSource(QUrl("qrc:///Login.qml"));
     view.resize(800, 480);
     //view.show();
     view.showFullScreen();
