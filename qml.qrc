@@ -4,5 +4,6 @@
         <file>FormView.qml</file>
         <file>FormResults.qml</file>
         <file>Login.qml</file>
+        <file>FormViewTest.qml</file>
     </qresource>
 </RCC>

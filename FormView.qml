@@ -128,7 +128,8 @@ Rectangle {
                                     x: 20
 
                                     ScrollView {
-                                        width: Screen.width; height: Screen.height/(heightItem_mobile + 6)
+                                        width: Screen.width;
+                                        height: Screen.height/(heightItem_mobile + 6)
 
                                     Column{
                                         id: columnCheckbox

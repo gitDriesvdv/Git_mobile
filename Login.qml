@@ -11,7 +11,7 @@ Item {
     Rectangle {
         id: root
         anchors.fill: parent
-        opacity: 1 - backendHelper.opacity
+        //opacity: 1 - backendHelper.opacity
 
         color: "#f4f4f4"
 
@@ -104,7 +104,12 @@ Item {
                             onSessionAuthenticated: {
                                 data.text = data.text + "User '"+ login.text +"' is logged in.\n\n" + JSON.stringify(reply.data, undefined, 2) + "\n\n"
                                 enginioModelLogs.append({"Log": data.text, "User": login.text})
-                                root.visible = true
+                                //root.visible = true
+                                var component = Qt.createComponent("FormView.qml")
+                                if (component.status == Component.Ready) {
+                                var window    = component.createObject(rec);
+                                window.show()
+                                }
 
                             }
                             onSessionAuthenticationError: {
