@@ -5,5 +5,8 @@
         <file>FormResults.qml</file>
         <file>Login.qml</file>
         <file>FormViewTest.qml</file>
+        <file>LoginContainer.qml</file>
+        <file>LoginTest.qml</file>
+        <file>MyForms.qml</file>
     </qresource>
 </RCC>

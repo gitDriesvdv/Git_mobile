@@ -32,7 +32,7 @@ Rectangle {
         client: client
         query: {
             "objectType": "objects.Form",
-            "query" : { "User": "Dries", "FormName" : "test"},
+            "query" : { "User": settings.username, "FormName" : settings.current_form},
             "sort" : [ {"sortBy": "indexForm", "direction": "asc"} ]
         }
     }
@@ -65,7 +65,7 @@ Rectangle {
                                 spacing: 10
                                 Rectangle {
                                     width: parent.width;
-                                    height: 20;
+                                    height: 45;
                                     color: "gray"
                                     x: 20
                                     Label {
@@ -85,13 +85,14 @@ Rectangle {
                                     Rectangle {
                                         id: autocomplete_adress
                                         width: parent.width;
-                                        height: 100
+                                        //height: 100
+                                        anchors.fill: parent
                                         color: "gray"
                                         TextField{
                                             id: textfield_autocomplete
                                             width: parent.width;
                                             height: Screen.height/(heightItem_mobile + 17)
-                                            placeholderText: "autocomplete"
+                                            placeholderText: "autocomplete"                                            
                                             onTextChanged: {
                                                 model.clear();
                                                 var xmlhttp = new XMLHttpRequest();
@@ -119,7 +120,7 @@ Rectangle {
                                         Component {
                                                 id: listDelegate
                                                 Item {
-                                                width: 250; height: 30
+                                                width: Screen.width; height: 60
                                                 Rectangle{
 
                                                     anchors.fill: parent
@@ -201,6 +202,7 @@ Rectangle {
                                     height: 20
                                     text:qsTr("streetname + number")
                                     width: parent.width/2.5;
+                                    font.pixelSize :20
                                     anchors.top: textfield_street.bottom
                                     color: "white"
                                 }
@@ -209,7 +211,7 @@ Rectangle {
                                 TextField {
                                     height: Screen.height/(heightItem_mobile + 17)
                                     font.pixelSize: 15
-                                    width: parent.width/2.5;
+                                    width: parent.width/2;
                                     id: textfield_place
                                     anchors.top: text_streetname.bottom
                                     onTextChanged: push_aInputFormArray("Place",textfield_place.text,List,Type,req)
@@ -224,7 +226,8 @@ Rectangle {
                                     id: text_place
                                     height: 20
                                     text:qsTr("place")
-                                    width: parent.width/2.5;
+                                    width: parent.width/2;
+                                    font.pixelSize :20
                                     anchors.top: textfield_place.bottom
                                     color: "white"
                                 }
@@ -233,7 +236,7 @@ Rectangle {
                                 TextField {
                                     height: Screen.height/(heightItem_mobile + 17)
                                     font.pixelSize: 15
-                                    width: parent.width/2.5;
+                                    width: parent.width/2;
                                     id: textfield_state
                                     anchors.top: text_streetname.bottom
                                     anchors.left: textfield_place.right
@@ -249,6 +252,7 @@ Rectangle {
                                     id: text_state
                                     height: 20
                                     text:qsTr("State")
+                                    font.pixelSize :20
                                     anchors.top: textfield_state.bottom
                                     anchors.left: text_place.right
                                     color: "white"
@@ -257,8 +261,8 @@ Rectangle {
                                 //postcode
                                 TextField {
                                     height: Screen.height/(heightItem_mobile + 17)
-                                    font.pixelSize: 15
-                                    width: parent.width/2.5;
+                                    font.pixelSize: 35
+                                    width: parent.width/2;
                                     id: textfield_postcode
                                     anchors.top: text_state.bottom
                                     onTextChanged: push_aInputFormArray("Postcode",textfield_postcode.text,List,Type,req)
@@ -272,8 +276,9 @@ Rectangle {
                                 Text{
                                     id: text_postcode
                                     height: 20
-                                    width: parent.width/2.5;
+                                    width: parent.width/2;
                                     text:qsTr("zip code")
+                                    font.pixelSize :20
                                     anchors.top: textfield_postcode.bottom
                                     color: "white"
                                 }
@@ -281,8 +286,8 @@ Rectangle {
                                 //land
                                 TextField {
                                     height: Screen.height/(heightItem_mobile + 17)
-                                    font.pixelSize: 15
-                                    width: parent.width/2.5;
+                                    font.pixelSize: 35
+                                    width: parent.width/2;
                                     id: textfield_country
                                     anchors.top: text_state.bottom
                                     anchors.left: textfield_postcode.right
@@ -298,12 +303,13 @@ Rectangle {
                                     id: text_country
                                     height: 20
                                     text:qsTr("country")
+                                    font.pixelSize :20
                                     anchors.top: textfield_country.bottom
                                     anchors.left: text_postcode.right
                                     color: "white"
                                 }
               /////////////////////////////////////
- }
+                                }
               /////////////////////////////////////
                                 }
 
@@ -424,14 +430,12 @@ Rectangle {
                                         init_aInputFormArray(Name,textarea_item.text,List,Type,req);
                                         }
                                     }
-
                                 }
                                 }
                     /*
                         Checkbox nog niet werkend. Een listview nog aan koppelen om meerdere weer te geven.
                         Idem maken voor radiobuttons
                     */
-
                                 Rectangle {
                                     width: parent.width;
                                     color: "gray"
@@ -467,16 +471,13 @@ Rectangle {
                                                     {
                                                         console.log("Checked");
                                                          push_aCheckboxArray(Name,checkbox_item.text);
-
                                                     }
                                                     else
                                                     {
                                                         console.log("niet meer checked");
                                                          pop_aCheckboxArray(Name,checkbox_item.text);
                                                     }
-
                                                 }
-
                                             }
                                             }
                                     }
@@ -512,10 +513,7 @@ Rectangle {
                                         if(item3.visible == true)
                                         {
                                             init_aInputFormArray(Name,combobox_item.currentText,List,Type,req)}
-
                                         }
-
-
                                         }
 
                                 }
@@ -525,43 +523,70 @@ Rectangle {
                                                 width: parent.width
                                                 color: "white"
                                             }
-
                     }
                 }
             }
 
+            Rectangle{
+                id: header
+                anchors.top: parent.top
+                width: parent.width
+                height: 70
+                color: "white"
+
+                Row {
+                    id: logo
+                    anchors.centerIn: parent
+                    anchors.horizontalCenterOffset: -4
+                    spacing: 4
+
+                    Text {
+                        text: "Form"
+                        anchors.verticalCenter: parent.verticalCenter
+                        anchors.verticalCenterOffset: -3
+                        font.bold: true
+                        font.pixelSize: 46
+                        color: "#555"
+                    }
+                }
+                Rectangle {
+                    width: parent.width ; height: 1
+                    anchors.bottom: parent.bottom
+                    color: "#bbb"
+                }
+            }
                 ListView {
                     id: formListView
                     model: enginioModel
                     delegate: listDelegate
                     clip: true
-                    y: 20
+                    //y: 20
                     visible: true
                     width: Screen.width
-                    height: Screen.height - (actionbar.height*2)
-
+                    height: Screen.height //- (actionbar.height)
+                    //anchors.fill: parent
+                    anchors.top : header.bottom
+                    anchors.bottom: actionbar.top
                     // Animations
                     add: Transition { NumberAnimation { properties: "y"; from: root.height; duration: 250 } }
                     removeDisplaced: Transition { NumberAnimation { properties: "y"; duration: 150 } }
                     remove: Transition { NumberAnimation { property: "opacity"; to: 0; duration: 150 } }
-
                 }
 
                 Rectangle{
                     id: actionbar
                     color: "gray"
-                    width: Screen.width //- grid.width
-                    height: 50
-                    //y:0
+                    width: Screen.width
+                    height: Screen.height / 16
                     visible: true;
-                    anchors.top: formListView.bottom
+                    anchors.bottom: parent.bottom
                     Row{
                         id: rowActionbar
                         height :parent.height
                         x:0
-                        width: parent.width //- grid.width
+                        width: parent.width
                         spacing: 20;
-                     Button{
+                     Button {
                          id: swapBUtton
                          anchors.verticalCenter: rowActionbar.verticalCenter
                          text: "Send";
@@ -569,10 +594,19 @@ Rectangle {
                          height: parent.height;
                          visible: true
                          onClicked: {
-                             writetoDatabase()
+                             //writetoDatabase()
+                             if(testValidation() !== false)
+                             {
+                                 messageDialog.text = "Thank you for your info";
+                                 messageDialog.visible = true;
+                                 writetoDatabase();
+                             }
+                             else
+                             {
+                                 messageDialog.visible = true;
+                             }
                          }
                      }
-
                     }
                 }
                 MessageDialog {
@@ -589,8 +623,8 @@ Rectangle {
 
     function init_aInputFormArray(fieldname,input,list,type,requ)
     {
-        var user = "Dries";
-        var formname = "azerty";
+        var user = settings.username;
+        var formname = settings.current_form;
 
         for (var i =0; i < aInputFormArray.length; i++){
            if  (aInputFormArray[i].fieldname === fieldname) {
