@@ -594,7 +594,6 @@ Rectangle {
                          height: parent.height;
                          visible: true
                          onClicked: {
-                             //writetoDatabase()
                              if(testValidation() !== false)
                              {
                                  messageDialog.text = "Thank you for your info";
@@ -611,7 +610,7 @@ Rectangle {
                 }
                 MessageDialog {
                     id: messageDialog
-                    title: "Error Message"
+                    title: "Message"
                     text: ""
                     visible: false
                     onAccepted: {
