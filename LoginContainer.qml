@@ -31,7 +31,7 @@ Item {
             id: tabView
             anchors.fill: parent
             anchors.margins: 3
-
+            tabsVisible: false
             Tab {
                 title: "Login"
                 LoginTest { anchors.fill: parent }

@@ -13,16 +13,22 @@ Rectangle {
             id: contactDelegate
 
             Rectangle{
+                id: rec
                 width: Screen.width; height: Screen.height/8
                 color: "white"
                 Text {
                     text: name
                     color: "black"
+                    anchors.verticalCenter: parent.verticalCenter
+                    anchors.horizontalCenter: parent.horizontalCenter
+                    font.bold: true
+                    font.pixelSize: 70
                 }
                 MouseArea {
                         anchors.fill: parent
                         onClicked: {
                             settings.current_form = name;
+                            header.z = 0;
                             var component = Qt.createComponent("FormViewTest.qml")
                             if (component.status == Component.Ready) {
                             var window    = component.createObject(recMyForms);
@@ -34,6 +40,7 @@ Rectangle {
                     id: divider
                     height: 1
                     width: Screen.width
+                    anchors.bottom: rec.bottom
                     color: "black"
                 }
             }
@@ -42,29 +49,55 @@ Rectangle {
                id: header
                anchors.top: parent.top
                width: parent.width
-               height: 70
-               color: "white"
-
+               height: Screen.height/4
+               color: "#f01313"
+                z:1
                Row {
                    id: logo
                    anchors.centerIn: parent
                    anchors.horizontalCenterOffset: -4
                    spacing: 4
-
+                   height: 20
                    Text {
-                       text: "Todos"
+
+                       text: "Forms"
                        anchors.verticalCenter: parent.verticalCenter
-                       anchors.verticalCenterOffset: -3
+                       anchors.verticalCenterOffset: -30
                        font.bold: true
                        font.pixelSize: 46
-                       color: "#555"
+                       color: "white"
                    }
                }
-               Rectangle {
+
+               Rectangle{
+                   id: subheader
+                   anchors.top: logo.bottom
+                   height: header.height/2
+                   width: Screen.width
+                   color: "red"
+                   /*Row{
+                       anchors.centerIn: parent
+                       height: 50*/
+
+                       Image {
+                           id: name
+                           anchors.top: logo.bottom
+                           source: "qrc:/new/prefix1/cropped-skyline_header2.png"
+                           //anchors.centerIn: parent
+                           anchors.horizontalCenter: parent.horizontalCenter
+                           height: Screen.height/7
+                           width: Screen.width
+                       }
+                   //}
+               }
+
+
+
+               /*Rectangle {
                    width: parent.width ; height: 1
                    anchors.bottom: parent.bottom
                    color: "#bbb"
-               }
+               }*/
            }
 
     ListModel {
@@ -75,9 +108,18 @@ Rectangle {
         width: Screen.width
         height: Screen.height
         anchors.top: header.bottom
+        anchors.bottom: footer.top
         model: listForms
         delegate: contactDelegate
         Component.onCompleted: getDataUserForms(settings.username);
+    }
+
+    Rectangle{
+        id: footer
+        anchors.bottom: parent.bottom
+        color: "#f01313"
+        width: Screen.width
+        height: Screen.height/10
     }
 
     function getDataUserForms(formname_input) {

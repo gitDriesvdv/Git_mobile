@@ -60,8 +60,9 @@ Rectangle{
             if (xmlhttp.readyState == 4 && xmlhttp.status == 200) {
                 var arr = JSON.parse(xmlhttp.responseText);
                 var arr1 = arr.results;
+                console.log(arr.results);
                 for(var i = 0; i < arr1.length; i++) {
-                    console.log(arr1[i].sessionID);
+                    //console.log(arr1[i].sessionID);
                     createFieldnamesList(arr1[i].fieldname)
                     createIdsList(arr1[i].sessionID)
                     var a = {"fieldname":arr1[i].fieldname, "input":arr1[i].input,"type":arr1[i].type,"list":arr1[i].list};

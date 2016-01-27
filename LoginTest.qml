@@ -3,9 +3,11 @@ import Enginio 1.0
 import QtQuick.Controls 1.0
 import QtQuick.Layouts 1.0
 import Qt.labs.settings 1.0
-
+import QtQuick.Controls.Styles 1.4
+import QtQuick.Window 2.0
 ColumnLayout {
     id:rec
+    //width: Screen.width
     //![identity]
     EnginioOAuth2Authentication {
         id: identity
@@ -21,25 +23,92 @@ ColumnLayout {
     anchors.fill: parent
     anchors.margins: 3
     spacing: 3
+    Rectangle{
+        id: headerspacer
+        width: Screen.width
+        height: 100
+        color: "white"
 
+    }
     TextField {
         id: login
         Layout.fillWidth: true
         placeholderText: "Username"
+        anchors.top: headerspacer.bottom
         enabled: enginioClient.authenticationState == Enginio.NotAuthenticated
+        style: TextFieldStyle {
+                textColor: "black"
+                background: Rectangle {
+                    radius: 10
+                    border.color: "gray"
+                    border.width: 4
+                }
+            }
+    }
+    /*Rectangle{
+        id: line
+        width: login.width
+        height: 2
+        color: "red"
+         anchors.top: login.bottom
+    }*/
+    Rectangle{
+        id: spacer
+        width: Screen.width
+        height: 20
+        color: "white"
+         anchors.top: login.bottom
     }
 
     TextField {
         id: password
+        anchors.top: spacer.bottom
         Layout.fillWidth: true
         placeholderText: "Password"
         echoMode: TextInput.PasswordEchoOnEdit
+        style: TextFieldStyle {
+                textColor: "black"
+                background: Rectangle {
+                    radius: 10
+                    border.color: "gray"
+                    border.width: 2
+                }
+            }
         enabled: enginioClient.authenticationState == Enginio.NotAuthenticated
     }
-
+    /*Rectangle{
+        id: line2
+        width: login.width
+        height: 2
+        color: "red"
+         anchors.top: password.bottom
+    }*/
+    Rectangle{
+        id: spacer2
+        width: Screen.width
+        height: 20
+        color: "white"
+         anchors.top: password.bottom
+    }
     Button {
+        anchors.top: spacer2.bottom
         id: proccessButton
         Layout.fillWidth: true
+        style: ButtonStyle {
+                background: Rectangle {
+                    implicitWidth: 100
+                    implicitHeight: 25
+                    color: "white"
+                    border.width: 5//control.activeFocus ? 2 : 1
+                    border.color: "red"
+                    radius: 9
+
+                    gradient: Gradient {
+                        GradientStop { position: 0 ; color: control.pressed ? "white" : "white" }
+                        GradientStop { position: 1 ; color: control.pressed ? "white" : "white" }
+                    }
+                }
+            }
     }
 
     TextArea {
@@ -62,10 +131,13 @@ ColumnLayout {
             }
             }
             onSessionAuthenticationError: {
-                data.text = data.text + "Authentication of user '"+ login.text +"' failed.\n\n" + JSON.stringify(reply.data, undefined, 2) + "\n\n"
+                var arr = JSON.stringify(reply.data);
+                var arr1 = arr.error
+                data.text = "Authentication failed"
+                console.log("TEST: " + JSON.stringify(reply.data, undefined, 2))
             }
             onSessionTerminated: {
-                data.text = data.text + "Session closed.\n\n"
+                //data.text = data.text + "Session closed.\n\n"
             }
         }
         //![connections]

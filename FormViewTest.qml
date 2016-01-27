@@ -6,11 +6,14 @@ import QtQuick.Controls 1.0
 import QtQuick.Layouts 1.0
 import QtQuick.Dialogs 1.2
 import QtQuick.Window 2.0
+import Qt.labs.settings 1.0
+import QtQuick.Controls.Styles 1.4
 
 Rectangle {
+    id:main
     width: Screen.width
     height: Screen.height
-    color: "gray"
+    color: "white"
 
     property variant aInputFormArray: [];
     property variant aCheckboxArray: [];
@@ -48,7 +51,7 @@ Rectangle {
     Rectangle{
         width: parent.width
         height: parent.height
-        color: "gray"
+        color: "white"
         Component.onCompleted: aSessionID = generateUUID();
 
 
@@ -66,7 +69,7 @@ Rectangle {
                                 Rectangle {
                                     width: parent.width;
                                     height: 45;
-                                    color: "gray"
+                                    color: "white"
                                     x: 20
                                     Label {
                                         id: name_component
@@ -80,14 +83,14 @@ Rectangle {
                                     x: 20
                                     width: parent.width;
                                     height: Screen.height/(heightItem_mobile)
-                                    color: "gray"
+                                    color: "white"
                                     //autocomplete
                                     Rectangle {
                                         id: autocomplete_adress
                                         width: parent.width;
                                         //height: 100
                                         anchors.fill: parent
-                                        color: "gray"
+                                        color: "white"
                                         TextField{
                                             id: textfield_autocomplete
                                             width: parent.width;
@@ -186,7 +189,7 @@ Rectangle {
                                 TextField {
                                     height: Screen.height/(heightItem_mobile + 17)
                                     anchors.top: textfield_autocomplete.bottom
-                                    font.pixelSize: 15
+                                    //font.pixelSize: 35
                                     width: parent.width;
                                     id: textfield_street
                                     onTextChanged: push_aInputFormArray("StreetNr",textfield_street.text,List,Type,req)
@@ -204,13 +207,13 @@ Rectangle {
                                     width: parent.width/2.5;
                                     font.pixelSize :20
                                     anchors.top: textfield_street.bottom
-                                    color: "white"
+                                    color: "black"
                                 }
 
                                 //plaats
                                 TextField {
                                     height: Screen.height/(heightItem_mobile + 17)
-                                    font.pixelSize: 15
+                                    //font.pixelSize: 15
                                     width: parent.width/2;
                                     id: textfield_place
                                     anchors.top: text_streetname.bottom
@@ -229,13 +232,13 @@ Rectangle {
                                     width: parent.width/2;
                                     font.pixelSize :20
                                     anchors.top: textfield_place.bottom
-                                    color: "white"
+                                    color: "black"
                                 }
 
                                 //staat
                                 TextField {
                                     height: Screen.height/(heightItem_mobile + 17)
-                                    font.pixelSize: 15
+                                    //font.pixelSize: 15
                                     width: parent.width/2;
                                     id: textfield_state
                                     anchors.top: text_streetname.bottom
@@ -255,13 +258,13 @@ Rectangle {
                                     font.pixelSize :20
                                     anchors.top: textfield_state.bottom
                                     anchors.left: text_place.right
-                                    color: "white"
+                                    color: "black"
                                 }
 
                                 //postcode
                                 TextField {
                                     height: Screen.height/(heightItem_mobile + 17)
-                                    font.pixelSize: 35
+                                    //font.pixelSize: 35
                                     width: parent.width/2;
                                     id: textfield_postcode
                                     anchors.top: text_state.bottom
@@ -280,13 +283,13 @@ Rectangle {
                                     text:qsTr("zip code")
                                     font.pixelSize :20
                                     anchors.top: textfield_postcode.bottom
-                                    color: "white"
+                                    color: "black"
                                 }
 
                                 //land
                                 TextField {
                                     height: Screen.height/(heightItem_mobile + 17)
-                                    font.pixelSize: 35
+                                    //font.pixelSize: 35
                                     width: parent.width/2;
                                     id: textfield_country
                                     anchors.top: text_state.bottom
@@ -306,7 +309,7 @@ Rectangle {
                                     font.pixelSize :20
                                     anchors.top: textfield_country.bottom
                                     anchors.left: text_postcode.right
-                                    color: "white"
+                                    color: "black"
                                 }
               /////////////////////////////////////
                                 }
@@ -319,11 +322,11 @@ Rectangle {
                                     x: 20
                                     width: parent.width;
                                     height: Screen.height/(heightItem_mobile + 6)
-                                    color: "gray"
+                                    color: "white"
 
                                 TextField {
                                     height: Screen.height/(heightItem_mobile + 17)
-                                    font.pixelSize: 15
+                                    //font.pixelSize: 15
                                     width: parent.width/2;
                                     id: textfield_firstname
                                     onTextChanged: push_aInputFormArray("First Name",textfield_firstname.text,List,Type,req)
@@ -346,7 +349,7 @@ Rectangle {
 
                                 TextField {
                                     height: Screen.height/(heightItem_mobile + 17)
-                                    font.pixelSize: 15
+                                    //font.pixelSize: 15
                                     width: parent.width/2;
                                     id: textfield_lastname
                                     anchors.left: textfield_firstname.right
@@ -374,10 +377,11 @@ Rectangle {
                                     x: 20
                                     width: parent.width;
                                     height: Screen.height/(heightItem_mobile + 9)
-                                    color: "gray"
+                                    color: "white"
                                 TextField {
                                     height: Screen.height/(heightItem_mobile + 17)
-                                    font.pixelSize: 15
+                                    //font.pixelSize: 15
+                                    anchors.bottom: itemEmail.bottom
                                     width: parent.width;
                                     id: email_item
                                     onTextChanged: push_aInputFormArray(Name,email_item.text,List,Type,req)
@@ -396,12 +400,13 @@ Rectangle {
                                     //y: 20
                                     width: parent.width;
                                     height: Screen.height/(heightItem_mobile + 9)
-                                    color: "gray"
+                                    color: "white"
                                 TextField {
-                                    font.pixelSize: 15
+                                    //font.pixelSize: 15
                                     height: Screen.height/(heightItem_mobile + 17)//heightItem_mobile/0.5
                                     width: parent.width;
                                     id: textfield_item
+                                    anchors.bottom: item1.bottom
                                     onTextChanged: push_aInputFormArray(Name,textfield_item.text,List,Type,req)
                                     Component.onCompleted: {
                                         if(item1.visible === true)
@@ -414,14 +419,14 @@ Rectangle {
 
                                 Rectangle {
                                     width: parent.width;
-                                    color: "gray"
+                                    color: "white"
                                     height: Screen.height/(heightItem_mobile + 4)
                                     id: item2
                                     visible: Type == "TextArea"
                                     x: 20
                                 TextArea {
                                     height: Screen.height/(heightItem_mobile + 4.5)
-                                    font.pixelSize: 15
+                                    //font.pixelSize: 15
                                     id: textarea_item
                                     onTextChanged: push_aInputFormArray(Name,textarea_item.text,List,Type,req)
                                     Component.onCompleted: {
@@ -438,7 +443,7 @@ Rectangle {
                     */
                                 Rectangle {
                                     width: parent.width;
-                                    color: "gray"
+                                    color: "white"
                                     height: Screen.height/(heightItem_mobile + 3)
                                     id: item4
                                     visible: Type == "CheckBox"
@@ -497,7 +502,7 @@ Rectangle {
                                     id: item3
                                     visible: qsTr(Type) === "ComboBox"
                                     x: 20
-                                    color: "gray"
+                                    color: "white"
                                 Text{
                                     id: containerID
                                     text: id
@@ -527,26 +532,48 @@ Rectangle {
                 }
             }
 
-            Rectangle{
+            Rectangle {
                 id: header
                 anchors.top: parent.top
                 width: parent.width
-                height: 70
-                color: "white"
+                height: 100
+                color: "red"
 
                 Row {
                     id: logo
+                    width: parent.width
+                    height: parent.height
                     anchors.centerIn: parent
-                    anchors.horizontalCenterOffset: -4
+
                     spacing: 4
 
+                    Image {
+                        id: backIcon
+                        source: "qrc:/new/prefix1/Icons8-Ios7-Arrows-Back.ico"
+                        x: 10
+                        width: 70
+                        height: 90
+                        anchors.left: parent.left
+                        MouseArea {
+                                anchors.fill: parent
+                                onClicked: {
+                                    var component = Qt.createComponent("MyForms.qml")
+                                    if (component.status == Component.Ready) {
+                                    var window    = component.createObject(main);
+                                    window.show()
+                                }
+                            }
+                        }
+                    }
                     Text {
-                        text: "Form"
+                        text: settings.current_form
+                        anchors.horizontalCenterOffset: -4
                         anchors.verticalCenter: parent.verticalCenter
                         anchors.verticalCenterOffset: -3
                         font.bold: true
                         font.pixelSize: 46
-                        color: "#555"
+                        anchors.left: backIcon.right
+                        color: "white"
                     }
                 }
                 Rectangle {
@@ -555,6 +582,7 @@ Rectangle {
                     color: "#bbb"
                 }
             }
+
                 ListView {
                     id: formListView
                     model: enginioModel
@@ -575,9 +603,9 @@ Rectangle {
 
                 Rectangle{
                     id: actionbar
-                    color: "gray"
+                    color: "white"
                     width: Screen.width
-                    height: Screen.height / 16
+                    height: Screen.height / 10
                     visible: true;
                     anchors.bottom: parent.bottom
                     Row{
@@ -593,12 +621,28 @@ Rectangle {
                          width: parent.width;
                          height: parent.height;
                          visible: true
+                         style: ButtonStyle {
+                                 background: Rectangle {
+                                     implicitWidth: 100
+                                     implicitHeight: 25
+                                     color: "white"
+                                     border.width: 5//control.activeFocus ? 2 : 1
+                                     border.color: "red"
+                                     radius: 30
+
+                                     gradient: Gradient {
+                                         GradientStop { position: 0 ; color: control.pressed ? "white" : "white" }
+                                         GradientStop { position: 1 ; color: control.pressed ? "white" : "white" }
+                                     }
+                                 }
+                             }
                          onClicked: {
                              if(testValidation() !== false)
                              {
                                  messageDialog.text = "Thank you for your info";
                                  messageDialog.visible = true;
                                  writetoDatabase();
+                                 aSessionID = generateUUID();
                              }
                              else
                              {
@@ -638,8 +682,8 @@ Rectangle {
 
     function push_aInputFormArray(fieldname,input,list,type,requ)
     {
-        var user = "Dries";
-        var formname = "azerty";
+        var user = settings.username;
+        var formname = settings.current_form;
             for (var i =0; i < aInputFormArray.length; i++){
                if  (aInputFormArray[i].fieldname === fieldname) {
                   aInputFormArray.splice(i,1);
