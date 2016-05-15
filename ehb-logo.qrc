@@ -1,0 +1,5 @@
+<RCC>
+    <qresource prefix="/new/prefix1">
+        <file>EHB-LOGO-SID-IN-APP.png</file>
+    </qresource>
+</RCC>

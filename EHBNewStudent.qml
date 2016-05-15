@@ -1,13 +1,14 @@
-import QtQuick 2.0
+import QtQuick 2.4
 import QtQuick.Layouts 1.1
 import Enginio 1.0
 import QtQuick.Dialogs 1.0
-import QtQuick.Controls 1.0
-import QtQuick.Layouts 1.0
+import QtQuick.Controls 1.3
+import QtQuick.Layouts 1.1
 import QtQuick.Dialogs 1.2
 import QtQuick.Window 2.0
 import Qt.labs.settings 1.0
 import QtQuick.Controls.Styles 1.4
+import QtQuick.LocalStorage 2.0
 
 Rectangle {
     id:main
@@ -30,22 +31,12 @@ Rectangle {
         }
     }
 
-    /*EnginioModel {
-        id: enginioModel
-        client: client
-        query: {
-            "objectType": "objects.Form",
-            "query" : { "User": settings.username, "FormName" : settings.current_form},
-            "sort" : [ {"sortBy": "indexForm", "direction": "asc"} ]
-        }
-    }*/
-    //            "query" : { "sessionID": "e18b1997-9c6d-4856-9d49-d754fb574796","User": "Dries1989e", "FormName" : "EHB_DEMO_1"},
     EnginioModel {
         id: enginioModel
         client: client
         query: {
             "objectType": "objects.Form",
-            "query" : { "User": "Dries1989e", "FormName" : "EHB_DEMO_1"},
+            "query" : { "User": "EHB", "FormName" : "EHB_FORM"},
             "sort" : [ {"sortBy": "indexForm", "direction": "asc"} ]
         }
     }
@@ -83,6 +74,7 @@ Rectangle {
                                     x: 20
                                     Label {
                                         id: name_component
+                                        color: "black"
                                         width: parent.width/2 ;
                                         text: req === true ? Name + "*": Name
                                     }
@@ -105,7 +97,7 @@ Rectangle {
                                             id: textfield_autocomplete
                                             width: parent.width;
                                             height: Screen.height/(heightItem_mobile + 17)
-                                            placeholderText: "autocomplete"                                            
+                                            placeholderText: "autocomplete"
                                             onTextChanged: {
                                                 model.clear();
                                                 var xmlhttp = new XMLHttpRequest();
@@ -421,6 +413,7 @@ Rectangle {
                                     Component.onCompleted: {
                                         if(item1.visible === true)
                                         {
+                                        insertData(FormName,Name,Type,User,heightItem_mobile,index,req)
                                         init_aInputFormArray(Name,textfield_item.text,List,Type,req);
                                         }
                                     }
@@ -567,7 +560,7 @@ Rectangle {
                         MouseArea {
                                 anchors.fill: parent
                                 onClicked: {
-                                    var component = Qt.createComponent("MyForms.qml")
+                                    var component = Qt.createComponent("EHBKeuzeMenu.qml")
                                     if (component.status == Component.Ready) {
                                     var window    = component.createObject(main);
                                     window.show()
@@ -576,6 +569,7 @@ Rectangle {
                         }
                     }
                     Text {
+                        id: headertext
                         text: settings.current_form
                         anchors.horizontalCenterOffset: -4
                         anchors.verticalCenter: parent.verticalCenter
@@ -605,6 +599,7 @@ Rectangle {
                     //anchors.fill: parent
                     anchors.top : header.bottom
                     anchors.bottom: actionbar.top
+                    //Component.onCompleted: init();
                     // Animations
                     add: Transition { NumberAnimation { properties: "y"; from: root.height; duration: 250 } }
                     removeDisplaced: Transition { NumberAnimation { properties: "y"; duration: 150 } }
@@ -646,7 +641,8 @@ Rectangle {
                                  }
                              }
                          onClicked: {
-                             if(testValidation() !== false)
+                             readData()
+                             /*if(testValidation() !== false)
                              {
                                  messageDialog.text = "Thank you for your info";
                                  messageDialog.visible = true;
@@ -656,7 +652,7 @@ Rectangle {
                              else
                              {
                                  messageDialog.visible = true;
-                             }
+                             }*/
                          }
                      }
                     }
@@ -851,6 +847,37 @@ Rectangle {
 
            }
     }
+
+    function insertData(formname,name,type,user,height,index,req)
+    {
+        var db = LocalStorage.openDatabaseSync("CrazyBox", "1.0", "Store form offline", 100000);
+        db.transaction(
+                    function(tx){
+                        tx.executeSql('INSERT INTO Form VALUES(?,?,?,?,?,?,?);'
+                                      ,[formname,name,type,user,height,index,req]);
+                        }
+
+                    );
+    }
+    function readData()
+    {
+        var db = LocalStorage.openDatabaseSync("CrazyBox", "1.0", "Store form offline", 100000);
+        db.transaction(
+            function(tx) {
+                // Show all added greetings
+                var rs = tx.executeSql('SELECT * FROM Form');
+                headertext.text = rs;
+                /*var r = ""
+                for(var i = 0; i < rs.rows.length; i++) {
+                    r += rs.rows.item(i).salutation + ", " + rs.rows.item(i).salutee + "\n"
+                }
+                text = r*/
+            }
+        )
+    }
+
 }
+
+
 
 

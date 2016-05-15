@@ -30,23 +30,23 @@ Rectangle {
         }
     }
 
-    /*EnginioModel {
+   /* EnginioModel {
         id: enginioModel
         client: client
         query: {
             "objectType": "objects.Form",
-            "query" : { "User": settings.username, "FormName" : settings.current_form},
+            "query" : { "user": settings.username, "formName" : settings.current_form},
             "sort" : [ {"sortBy": "indexForm", "direction": "asc"} ]
         }
     }*/
-    //            "query" : { "sessionID": "e18b1997-9c6d-4856-9d49-d754fb574796","User": "Dries1989e", "FormName" : "EHB_DEMO_1"},
+    //"sessionID": "e18b1997-9c6d-4856-9d49-d754fb574796"
     EnginioModel {
         id: enginioModel
         client: client
         query: {
-            "objectType": "objects.Form",
-            "query" : { "User": "Dries1989e", "FormName" : "EHB_DEMO_1"},
-            "sort" : [ {"sortBy": "indexForm", "direction": "asc"} ]
+            "objectType": "objects.resultforms",
+            "query" : { "formname" : "EHB_FORM"},
+            /*"sort" : [ {"sortBy": "indexForm", "direction": "asc"}]*/
         }
     }
     EnginioModel {
@@ -70,7 +70,7 @@ Rectangle {
                 Item {
                     id: item_list
                     width: Screen.width - 50 ;
-                    height: Screen.height/heightItem_mobile//+ 40
+                    height: 44
                     Column{
                         id: col
                         width: parent.width
@@ -78,21 +78,22 @@ Rectangle {
                                 spacing: 10
                                 Rectangle {
                                     width: parent.width;
-                                    height: 45;
+                                    height: Screen.height/heightItem_mobile;
                                     color: "white"
                                     x: 20
                                     Label {
                                         id: name_component
                                         width: parent.width/2 ;
-                                        text: req === true ? Name + "*": Name
+                                        //text: req === true ? Name + "*": Name
+                                        //text: fieldname
                                     }
                                 }
                                 Rectangle {
                                     id: itemAdress
-                                    visible: Type == "Adress"
+                                    visible: type == "Adress"
                                     x: 20
                                     width: parent.width;
-                                    height: Screen.height/(heightItem_mobile)
+                                    height: Screen.height/4
                                     color: "white"
                                     //autocomplete
                                     Rectangle {
@@ -104,8 +105,8 @@ Rectangle {
                                         TextField{
                                             id: textfield_autocomplete
                                             width: parent.width;
-                                            height: Screen.height/(heightItem_mobile + 17)
-                                            placeholderText: "autocomplete"                                            
+                                            height: Screen.height/(4 + 17)
+                                            placeholderText: "autocomplete"
                                             onTextChanged: {
                                                 model.clear();
                                                 var xmlhttp = new XMLHttpRequest();
@@ -197,10 +198,11 @@ Rectangle {
                                         }
                                     //straat + nummer
                                 TextField {
-                                    height: Screen.height/(heightItem_mobile + 17)
+                                    height: Screen.height/(4 + 17)
                                     anchors.top: textfield_autocomplete.bottom
                                     //font.pixelSize: 35
                                     width: parent.width;
+                                    text: input
                                     id: textfield_street
                                     onTextChanged: push_aInputFormArray("StreetNr",textfield_street.text,List,Type,req)
                                     Component.onCompleted: {
@@ -222,7 +224,7 @@ Rectangle {
 
                                 //plaats
                                 TextField {
-                                    height: Screen.height/(heightItem_mobile + 17)
+                                    height: Screen.height/(4 + 17)
                                     //font.pixelSize: 15
                                     width: parent.width/2;
                                     id: textfield_place
@@ -247,7 +249,7 @@ Rectangle {
 
                                 //staat
                                 TextField {
-                                    height: Screen.height/(heightItem_mobile + 17)
+                                    height: Screen.height/(4 + 17)
                                     //font.pixelSize: 15
                                     width: parent.width/2;
                                     id: textfield_state
@@ -273,7 +275,7 @@ Rectangle {
 
                                 //postcode
                                 TextField {
-                                    height: Screen.height/(heightItem_mobile + 17)
+                                    height: Screen.height/(4 + 17)
                                     //font.pixelSize: 35
                                     width: parent.width/2;
                                     id: textfield_postcode
@@ -298,7 +300,7 @@ Rectangle {
 
                                 //land
                                 TextField {
-                                    height: Screen.height/(heightItem_mobile + 17)
+                                    height: Screen.height/(4 + 17)
                                     //font.pixelSize: 35
                                     width: parent.width/2;
                                     id: textfield_country
@@ -328,14 +330,14 @@ Rectangle {
 
                                 Rectangle {
                                     id: itemFullName
-                                    visible: Type == "ComplexType"
+                                    visible: type == "ComplexType"
                                     x: 20
                                     width: parent.width;
-                                    height: Screen.height/(heightItem_mobile + 6)
+                                    height: Screen.height/(8 + 6)
                                     color: "white"
 
                                 TextField {
-                                    height: Screen.height/(heightItem_mobile + 17)
+                                    height: Screen.height/(8 + 17)
                                     //font.pixelSize: 15
                                     width: parent.width/2;
                                     id: textfield_firstname
@@ -358,7 +360,7 @@ Rectangle {
                                 }
 
                                 TextField {
-                                    height: Screen.height/(heightItem_mobile + 17)
+                                    height: Screen.height/(8 + 17)
                                     //font.pixelSize: 15
                                     width: parent.width/2;
                                     id: textfield_lastname
@@ -383,13 +385,13 @@ Rectangle {
                                 }
                                 Rectangle {
                                     id: itemEmail
-                                    visible: Type == "Email"
+                                    visible: type == "Email"
                                     x: 20
                                     width: parent.width;
-                                    height: Screen.height/(heightItem_mobile + 9)
+                                    height: Screen.height//(heightItem_mobile + 9)
                                     color: "white"
                                 TextField {
-                                    height: Screen.height/(heightItem_mobile + 17)
+                                    height: Screen.height//(heightItem_mobile + 17)
                                     //font.pixelSize: 15
                                     anchors.bottom: itemEmail.bottom
                                     width: parent.width;
@@ -405,16 +407,17 @@ Rectangle {
                                 }
                                 Rectangle {
                                     id: item1
-                                    visible: Type == "TextField"
+                                    visible: type == "TextField"
                                     x: 20
                                     //y: 20
                                     width: parent.width;
-                                    height: Screen.height/(heightItem_mobile + 9)
+                                    height: Screen.height/(8 + 9)
                                     color: "white"
                                 TextField {
                                     //font.pixelSize: 15
-                                    height: Screen.height/(heightItem_mobile + 17)//heightItem_mobile/0.5
+                                    height: Screen.height/(8 + 17)//heightItem_mobile/0.5
                                     width: parent.width;
+                                    text: input
                                     id: textfield_item
                                     anchors.bottom: item1.bottom
                                     onTextChanged: push_aInputFormArray(Name,textfield_item.text,List,Type,req)
@@ -432,7 +435,7 @@ Rectangle {
                                     color: "white"
                                     height: Screen.height/(heightItem_mobile + 4)
                                     id: item2
-                                    visible: Type == "TextArea"
+                                    visible: type == "TextArea"
                                     x: 20
                                 TextArea {
                                     height: Screen.height/(heightItem_mobile + 4.5)
@@ -456,7 +459,7 @@ Rectangle {
                                     color: "white"
                                     height: Screen.height/(heightItem_mobile + 3)
                                     id: item4
-                                    visible: Type == "CheckBox"
+                                    visible: type == "CheckBox"
                                     x: 20
 
                                     ScrollView {
@@ -510,7 +513,7 @@ Rectangle {
                                     height: Screen.height/(heightItem_mobile + 6)
                                     width: parent.width
                                     id: item3
-                                    visible: qsTr(Type) === "ComboBox"
+                                    visible: qsTr(type) === "ComboBox"
                                     x: 20
                                     color: "white"
                                 Text{
@@ -567,7 +570,7 @@ Rectangle {
                         MouseArea {
                                 anchors.fill: parent
                                 onClicked: {
-                                    var component = Qt.createComponent("MyForms.qml")
+                                    var component = Qt.createComponent("EHBKeuzeMenu.qml")
                                     if (component.status == Component.Ready) {
                                     var window    = component.createObject(main);
                                     window.show()
@@ -576,7 +579,7 @@ Rectangle {
                         }
                     }
                     Text {
-                        text: settings.current_form
+                        text: "EHB"
                         anchors.horizontalCenterOffset: -4
                         anchors.verticalCenter: parent.verticalCenter
                         anchors.verticalCenterOffset: -3
@@ -601,7 +604,7 @@ Rectangle {
                     //y: 20
                     visible: true
                     width: Screen.width
-                    height: Screen.height //- (actionbar.height)
+                    height: Screen.height - actionbar.height - header.bottom
                     //anchors.fill: parent
                     anchors.top : header.bottom
                     anchors.bottom: actionbar.top
@@ -852,5 +855,7 @@ Rectangle {
            }
     }
 }
+
+
 
 

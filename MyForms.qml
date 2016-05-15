@@ -3,12 +3,13 @@ import QtQuick 2.0
 import Enginio 1.0
 import QtQuick.Window 2.0
 import Qt.labs.settings 1.0
+import QtQuick.Controls 1.4
 Rectangle {
     id: recMyForms
     property var aUniqueList: [];
     width: Screen.width
     height: Screen.height
-
+    z:1
     Component {
             id: contactDelegate
 
@@ -120,6 +121,12 @@ Rectangle {
         color: "#f01313"
         width: Screen.width
         height: Screen.height/10
+
+        Button {
+            id: logout
+            anchors.fill: parent
+            text: "LOGOUT"
+        }
     }
 
     function getDataUserForms(formname_input) {

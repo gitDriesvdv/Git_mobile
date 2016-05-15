@@ -16,7 +16,7 @@ Item {
         anchors.fill: parent
         opacity: 1
 
-        color: "#f4f4f4"
+        color: "white"
 
         //![client]
         EnginioClient {
@@ -34,7 +34,8 @@ Item {
             tabsVisible: false
             Tab {
                 title: "Login"
-                LoginTest { anchors.fill: parent }
+                LoginTest { anchors.fill: parent
+                }
             }
 
            

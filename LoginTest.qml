@@ -110,7 +110,13 @@ ColumnLayout {
                 }
             }
     }
-
+    Rectangle{
+        id: spacer3
+        width: Screen.width
+        height: 80
+        color: "white"
+         anchors.top: proccessButton.bottom
+    }
     TextArea {
         id: data
         text: "Not logged in.\n\n"
@@ -125,7 +131,7 @@ ColumnLayout {
                 data.text = data.text + "User '"+ login.text +"' is logged in.\n\n" + JSON.stringify(reply.data, undefined, 2) + "\n\n"
                 settings.username = login.text;
                 var component = Qt.createComponent("MyForms.qml")
-                if (component.status == Component.Ready) {
+                if (component.status === Component.Ready) {
                 var window    = component.createObject(main);
                 window.show()
             }
@@ -142,7 +148,20 @@ ColumnLayout {
         }
         //![connections]
     }
+Rectangle{
+    id: logoContainer
+    anchors.top: spacer3.bottom
+    //width: Screen.width
+    Image {
+        id: logoImage
+        //anchors.fill: logoContainer
+        width: Screen.width
+        height: Screen.height/1.8
+        horizontalAlignment: parent.horizontalCenter
+        source: "qrc:/new/prefix1/EHB-LOGO-SID-IN-APP.png"
+    }
 
+}
     states: [
         State {
             name: "NotAuthenticated"

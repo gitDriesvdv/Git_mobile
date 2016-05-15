@@ -1,13 +1,14 @@
-import QtQuick 2.0
+import QtQuick 2.4
 import QtQuick.Layouts 1.1
 import Enginio 1.0
 import QtQuick.Dialogs 1.0
-import QtQuick.Controls 1.0
-import QtQuick.Layouts 1.0
+import QtQuick.Controls 1.3
+import QtQuick.Layouts 1.1
 import QtQuick.Dialogs 1.2
 import QtQuick.Window 2.0
 import Qt.labs.settings 1.0
 import QtQuick.Controls.Styles 1.4
+import QtQuick.LocalStorage 2.0
 
 Rectangle {
     id:main
@@ -19,6 +20,8 @@ Rectangle {
     property variant aCheckboxArray: [];
     property string aSessionID: "";
     property string aErrorMessage: "";
+    property string output: "";
+    property variant aArray: [];
 
     EnginioClient {
         id: client
@@ -30,22 +33,12 @@ Rectangle {
         }
     }
 
-    /*EnginioModel {
-        id: enginioModel
-        client: client
-        query: {
-            "objectType": "objects.Form",
-            "query" : { "User": settings.username, "FormName" : settings.current_form},
-            "sort" : [ {"sortBy": "indexForm", "direction": "asc"} ]
-        }
-    }*/
-    //            "query" : { "sessionID": "e18b1997-9c6d-4856-9d49-d754fb574796","User": "Dries1989e", "FormName" : "EHB_DEMO_1"},
     EnginioModel {
         id: enginioModel
         client: client
         query: {
             "objectType": "objects.Form",
-            "query" : { "User": "Dries1989e", "FormName" : "EHB_DEMO_1"},
+            "query" : { "User": "EHB", "FormName" : "EHB_FORM"},
             "sort" : [ {"sortBy": "indexForm", "direction": "asc"} ]
         }
     }
@@ -56,7 +49,10 @@ Rectangle {
             "objectType": "objects.resultforms"
         }
     }
-
+    Settings {
+            id: settings
+            property var offlineList:[];
+        }
     //FormName
     Rectangle{
         width: parent.width
@@ -83,6 +79,7 @@ Rectangle {
                                     x: 20
                                     Label {
                                         id: name_component
+                                        color: "black"
                                         width: parent.width/2 ;
                                         text: req === true ? Name + "*": Name
                                     }
@@ -105,7 +102,7 @@ Rectangle {
                                             id: textfield_autocomplete
                                             width: parent.width;
                                             height: Screen.height/(heightItem_mobile + 17)
-                                            placeholderText: "autocomplete"                                            
+                                            placeholderText: "autocomplete"
                                             onTextChanged: {
                                                 model.clear();
                                                 var xmlhttp = new XMLHttpRequest();
@@ -343,7 +340,24 @@ Rectangle {
                                     Component.onCompleted: {
                                         if(itemFullName.visible === true)
                                         {
-                                        init_aInputFormArray("First Name",textfield_firstname.text,List,Type,req);
+                                            /*var input = {
+                                                "test": null,
+                                                "FormName": "EHB_FORM",
+                                                "List": [],
+                                                "Name": "Full Name",
+                                                "Type": "ComplexType",
+                                                "User": "EHB",
+                                                "heightItem": 90,
+                                                "heightItemView": null,
+                                                "heightItem_mobile": 8,
+                                                "indexForm": 1,
+                                                "req": false,
+                                                "requiredtest": null
+                                              };
+                                            settings.offlineList.push(input)*/
+
+                                            //aArray.push(input)
+                                            init_aInputFormArray("First Name",textfield_firstname.text,List,Type,req);
                                         }
                                     }
                                 }
@@ -362,11 +376,13 @@ Rectangle {
                                     //font.pixelSize: 15
                                     width: parent.width/2;
                                     id: textfield_lastname
+                                    text: output
                                     anchors.left: textfield_firstname.right
                                     onTextChanged: push_aInputFormArray("Last Name",textfield_lastname.text,List,Type,req)
                                     Component.onCompleted: {
                                         if(text_firstname.visible === true)
                                         {
+                                         getExistingInput(Name);
                                         init_aInputFormArray("Last Name",textfield_lastname.text,List,Type,req);
                                         }
                                     }
@@ -416,15 +432,20 @@ Rectangle {
                                     height: Screen.height/(heightItem_mobile + 17)//heightItem_mobile/0.5
                                     width: parent.width;
                                     id: textfield_item
+                                    //text: output
                                     anchors.bottom: item1.bottom
                                     onTextChanged: push_aInputFormArray(Name,textfield_item.text,List,Type,req)
                                     Component.onCompleted: {
                                         if(item1.visible === true)
                                         {
-                                        init_aInputFormArray(Name,textfield_item.text,List,Type,req);
+                                            //getExistingInput(Name);
+                                            insertData(FormName,Name,Type,User,heightItem_mobile,index,req)
+                                            init_aInputFormArray(Name,textfield_item.text,List,Type,req);
                                         }
+
                                     }
                                 }
+
                                 }
 
                                 Rectangle {
@@ -567,7 +588,7 @@ Rectangle {
                         MouseArea {
                                 anchors.fill: parent
                                 onClicked: {
-                                    var component = Qt.createComponent("MyForms.qml")
+                                    var component = Qt.createComponent("EHBKeuzeMenu.qml")
                                     if (component.status == Component.Ready) {
                                     var window    = component.createObject(main);
                                     window.show()
@@ -576,6 +597,7 @@ Rectangle {
                         }
                     }
                     Text {
+                        id: headertext
                         text: settings.current_form
                         anchors.horizontalCenterOffset: -4
                         anchors.verticalCenter: parent.verticalCenter
@@ -584,6 +606,7 @@ Rectangle {
                         font.pixelSize: 46
                         anchors.left: backIcon.right
                         color: "white"
+
                     }
                 }
                 Rectangle {
@@ -605,6 +628,7 @@ Rectangle {
                     //anchors.fill: parent
                     anchors.top : header.bottom
                     anchors.bottom: actionbar.top
+                    //Component.onCompleted: init();
                     // Animations
                     add: Transition { NumberAnimation { properties: "y"; from: root.height; duration: 250 } }
                     removeDisplaced: Transition { NumberAnimation { properties: "y"; duration: 150 } }
@@ -646,7 +670,7 @@ Rectangle {
                                  }
                              }
                          onClicked: {
-                             if(testValidation() !== false)
+                             /*if(testValidation() !== false)
                              {
                                  messageDialog.text = "Thank you for your info";
                                  messageDialog.visible = true;
@@ -656,7 +680,7 @@ Rectangle {
                              else
                              {
                                  messageDialog.visible = true;
-                             }
+                             }*/
                          }
                      }
                     }
@@ -807,7 +831,7 @@ Rectangle {
         var uuid = 'xxxxxxxx-xxxx-4xxx-yxxx-xxxxxxxxxxxx'.replace(/[xy]/g, function(c) {
             var r = (d + Math.random()*16)%16 | 0;
             d = Math.floor(d/16);
-            return (c=='x' ? r : (r&0x3|0x8)).toString(16);
+            return (c =='x' ? r : (r&0x3|0x8)).toString(16);
         });
         return uuid;
     }
@@ -850,6 +874,58 @@ Rectangle {
             }
 
            }
+    }
+
+    function insertData(formname,name,type,user,height,index,req)
+    {
+        var db = LocalStorage.openDatabaseSync("CrazyBox", "1.0", "Store form offline", 100000);
+        db.transaction(
+                    function(tx){
+                        tx.executeSql('INSERT INTO Form VALUES(?,?,?,?,?,?,?);'
+                                      ,[formname,name,type,user,height,index,req]);
+                        }
+
+                    );
+    }
+    function readData()
+    {
+        var db = LocalStorage.openDatabaseSync("CrazyBox", "1.0", "Store form offline", 100000);
+        db.transaction(
+            function(tx) {
+                // Show all added greetings
+                var rs = tx.executeSql('SELECT * FROM Form');
+                headertext.text = rs;
+                /*var r = ""
+                for(var i = 0; i < rs.rows.length; i++) {
+                    r += rs.rows.item(i).salutation + ", " + rs.rows.item(i).salutee + "\n"
+                }
+                text = r*/
+            }
+        )
+    }
+    function getExistingInput(id) {
+        var xmlhttp = new XMLHttpRequest();
+        var url = "https://api.engin.io/v1/objects/resultforms"
+        xmlhttp.onreadystatechange=function() {
+            if (xmlhttp.readyState == 4 && xmlhttp.status == 200) {
+                var arr = JSON.parse(xmlhttp.responseText);
+                var arr1 = arr.results;
+                for(var i = 0; i < arr1.length; i++) {
+                    if(arr1[i].fieldname === id && arr1[i].sessionID === "23779f8b-2aa4-4831-ab0b-06fc6ed5cdc3")
+                    {
+                        output = "";
+                        output = arr1[i].input;
+                    }
+                }
+            }
+            else
+            {
+                console.log("Bad request")
+            }
+        }
+        xmlhttp.open("GET", url, true);
+        xmlhttp.setRequestHeader("Enginio-Backend-Id","54be545ae5bde551410243c3");
+        xmlhttp.send();
     }
 }
 
