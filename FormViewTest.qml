@@ -30,17 +30,17 @@ Rectangle {
         }
     }
 
-    /*EnginioModel {
+    EnginioModel {
         id: enginioModel
         client: client
         query: {
             "objectType": "objects.Form",
-            "query" : { "User": settings.username, "FormName" : settings.current_form},
+            "query" : { /*"User": settings.username, */"FormName" : settings.current_form},
             "sort" : [ {"sortBy": "indexForm", "direction": "asc"} ]
         }
-    }*/
+    }
     //            "query" : { "sessionID": "e18b1997-9c6d-4856-9d49-d754fb574796","User": "Dries1989e", "FormName" : "EHB_DEMO_1"},
-    EnginioModel {
+    /*EnginioModel {
         id: enginioModel
         client: client
         query: {
@@ -48,7 +48,7 @@ Rectangle {
             "query" : { "User": "Dries1989e", "FormName" : "EHB_DEMO_1"},
             "sort" : [ {"sortBy": "indexForm", "direction": "asc"} ]
         }
-    }
+    }*/
     EnginioModel {
         id: enginioModelResult
         client: client
@@ -576,7 +576,7 @@ Rectangle {
                         }
                     }
                     Text {
-                        text: settings.current_form
+                        text: settings.current_form + ": " + settings.username
                         anchors.horizontalCenterOffset: -4
                         anchors.verticalCenter: parent.verticalCenter
                         anchors.verticalCenterOffset: -3
