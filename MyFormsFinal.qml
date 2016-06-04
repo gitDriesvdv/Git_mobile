@@ -10,6 +10,11 @@ Rectangle {
     width: Screen.width
     height: Screen.height
     z:1
+    Image {
+        id: background
+        source: "qrc:/new/prefix1/nexus-colorful-stock-background-3723_image.jpg"
+        anchors.fill: parent
+    }
     Component {
             id: contactDelegate
 
@@ -17,6 +22,7 @@ Rectangle {
                 id: rec
                 width: Screen.width; height: Screen.height/8
                 color: "white"
+                opacity: 0.5
                 Text {
                     text: name
                     color: "black"
@@ -30,7 +36,7 @@ Rectangle {
                         onClicked: {
                             settings.current_form = name;
                             header.z = 0;
-                            var component = Qt.createComponent("FormViewTest.qml")
+                            var component = Qt.createComponent("FormViewFinal.qml")
                             if (component.status == Component.Ready) {
                             var window    = component.createObject(recMyForms);
                             window.show()
@@ -50,8 +56,8 @@ Rectangle {
                id: header
                anchors.top: parent.top
                width: parent.width
-               height: Screen.height/4
-               color: "#f01313"
+               height: Screen.height/6
+               color: "transparent"
                 z:1
                Row {
                    id: logo
@@ -75,42 +81,27 @@ Rectangle {
                    anchors.top: logo.bottom
                    height: header.height/2
                    width: Screen.width
-                   color: "red"
-                   /*Row{
-                       anchors.centerIn: parent
-                       height: 50*/
-
-                       Image {
-                           id: name
-                           anchors.top: logo.bottom
-                           source: "qrc:/new/prefix1/cropped-skyline_header2.png"
-                           //anchors.centerIn: parent
-                           anchors.horizontalCenter: parent.horizontalCenter
-                           height: Screen.height/7
-                           width: Screen.width
-                       }
-                   //}
+                   color: "transparent"
                }
-
-
-
-               /*Rectangle {
-                   width: parent.width ; height: 1
-                   anchors.bottom: parent.bottom
-                   color: "#bbb"
-               }*/
            }
 
     ListModel {
         id: listForms
     }
+    Rectangle{
+        color: "white"
+        opacity: 0.7
+        anchors.fill: formlist
+    }
 
     ListView {
+        id: formlist
         width: Screen.width
         height: Screen.height
         anchors.top: header.bottom
         anchors.bottom: footer.top
         model: listForms
+
         delegate: contactDelegate
         Component.onCompleted: getDataUserForms(settings.username);
     }
@@ -118,7 +109,7 @@ Rectangle {
     Rectangle{
         id: footer
         anchors.bottom: parent.bottom
-        color: "#f01313"
+        color: "transparent"
         width: Screen.width
         height: Screen.height/10
 

@@ -1,0 +1,5 @@
+<RCC>
+    <qresource prefix="/new/prefix1">
+        <file>nexus-colorful-stock-background-3723_image.jpg</file>
+    </qresource>
+</RCC>

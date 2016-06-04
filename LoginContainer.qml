@@ -10,22 +10,17 @@ Item {
     height: 800
     width: 600
 
-
     Rectangle {
         id: root
         anchors.fill: parent
         opacity: 1
-
         color: "white"
-
-        //![client]
         EnginioClient {
             id: enginioClient
             backendId: "54be545ae5bde551410243c3"
 
             onError: console.debug(JSON.stringify(reply.data))
         }
-        //![client]
 
         TabView {
             id: tabView
@@ -34,7 +29,7 @@ Item {
             tabsVisible: false
             Tab {
                 title: "Login"
-                LoginTest { anchors.fill: parent
+                LoginFinal { anchors.fill: parent
                 }
             }
 

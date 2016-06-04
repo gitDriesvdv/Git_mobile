@@ -39,16 +39,7 @@ Rectangle {
             "sort" : [ {"sortBy": "indexForm", "direction": "asc"} ]
         }
     }
-    //            "query" : { "sessionID": "e18b1997-9c6d-4856-9d49-d754fb574796","User": "Dries1989e", "FormName" : "EHB_DEMO_1"},
-    /*EnginioModel {
-        id: enginioModel
-        client: client
-        query: {
-            "objectType": "objects.Form",
-            "query" : { "User": "Dries1989e", "FormName" : "EHB_DEMO_1"},
-            "sort" : [ {"sortBy": "indexForm", "direction": "asc"} ]
-        }
-    }*/
+
     EnginioModel {
         id: enginioModelResult
         client: client
@@ -98,7 +89,6 @@ Rectangle {
                                     Rectangle {
                                         id: autocomplete_adress
                                         width: parent.width;
-                                        //height: 100
                                         anchors.fill: parent
                                         color: "white"
                                         TextField{
@@ -174,7 +164,6 @@ Rectangle {
                                                                                         }
                                                                                     }
                                                                                     textfield_autocomplete.text = "";
-                                                                                    console.log(xmlhttp.responseText);
                                                                                 }
                                                                             }
                                                                             xmlhttp.open("GET", url, true);
@@ -199,7 +188,6 @@ Rectangle {
                                 TextField {
                                     height: Screen.height/(heightItem_mobile + 17)
                                     anchors.top: textfield_autocomplete.bottom
-                                    //font.pixelSize: 35
                                     width: parent.width;
                                     id: textfield_street
                                     onTextChanged: push_aInputFormArray("StreetNr",textfield_street.text,List,Type,req)
@@ -223,7 +211,6 @@ Rectangle {
                                 //plaats
                                 TextField {
                                     height: Screen.height/(heightItem_mobile + 17)
-                                    //font.pixelSize: 15
                                     width: parent.width/2;
                                     id: textfield_place
                                     anchors.top: text_streetname.bottom
@@ -248,7 +235,6 @@ Rectangle {
                                 //staat
                                 TextField {
                                     height: Screen.height/(heightItem_mobile + 17)
-                                    //font.pixelSize: 15
                                     width: parent.width/2;
                                     id: textfield_state
                                     anchors.top: text_streetname.bottom
@@ -274,7 +260,6 @@ Rectangle {
                                 //postcode
                                 TextField {
                                     height: Screen.height/(heightItem_mobile + 17)
-                                    //font.pixelSize: 35
                                     width: parent.width/2;
                                     id: textfield_postcode
                                     anchors.top: text_state.bottom
@@ -299,7 +284,6 @@ Rectangle {
                                 //land
                                 TextField {
                                     height: Screen.height/(heightItem_mobile + 17)
-                                    //font.pixelSize: 35
                                     width: parent.width/2;
                                     id: textfield_country
                                     anchors.top: text_state.bottom
@@ -321,9 +305,7 @@ Rectangle {
                                     anchors.left: text_postcode.right
                                     color: "black"
                                 }
-              /////////////////////////////////////
                                 }
-              /////////////////////////////////////
                                 }
 
                                 Rectangle {
@@ -336,7 +318,6 @@ Rectangle {
 
                                 TextField {
                                     height: Screen.height/(heightItem_mobile + 17)
-                                    //font.pixelSize: 15
                                     width: parent.width/2;
                                     id: textfield_firstname
                                     onTextChanged: push_aInputFormArray("First Name",textfield_firstname.text,List,Type,req)
@@ -349,7 +330,6 @@ Rectangle {
                                 }
                                 Text{
                                     id: text_firstname
-                                    //height: 7
                                     text:qsTr("first name")
                                     width: parent.width/2;
                                     anchors.top: textfield_firstname.bottom
@@ -359,7 +339,6 @@ Rectangle {
 
                                 TextField {
                                     height: Screen.height/(heightItem_mobile + 17)
-                                    //font.pixelSize: 15
                                     width: parent.width/2;
                                     id: textfield_lastname
                                     anchors.left: textfield_firstname.right
@@ -373,7 +352,6 @@ Rectangle {
 
                                 }
                                 Text{
-                                    //height: 10
                                     text:qsTr("last name")
                                     anchors.top: textfield_lastname.bottom
                                     anchors.left: text_firstname.right
@@ -390,7 +368,6 @@ Rectangle {
                                     color: "white"
                                 TextField {
                                     height: Screen.height/(heightItem_mobile + 17)
-                                    //font.pixelSize: 15
                                     anchors.bottom: itemEmail.bottom
                                     width: parent.width;
                                     id: email_item
@@ -404,22 +381,20 @@ Rectangle {
                                 }
                                 }
                                 Rectangle {
-                                    id: item1
+                                    id: itemTextField
                                     visible: Type == "TextField"
                                     x: 20
-                                    //y: 20
                                     width: parent.width;
                                     height: Screen.height/(heightItem_mobile + 9)
                                     color: "white"
                                 TextField {
-                                    //font.pixelSize: 15
                                     height: Screen.height/(heightItem_mobile + 17)//heightItem_mobile/0.5
                                     width: parent.width;
                                     id: textfield_item
-                                    anchors.bottom: item1.bottom
+                                    anchors.bottom: itemTextField.bottom
                                     onTextChanged: push_aInputFormArray(Name,textfield_item.text,List,Type,req)
                                     Component.onCompleted: {
-                                        if(item1.visible === true)
+                                        if(itemTextField.visible === true)
                                         {
                                         init_aInputFormArray(Name,textfield_item.text,List,Type,req);
                                         }
@@ -431,26 +406,22 @@ Rectangle {
                                     width: parent.width;
                                     color: "white"
                                     height: Screen.height/(heightItem_mobile + 4)
-                                    id: item2
+                                    id: itemTextArea
                                     visible: Type == "TextArea"
                                     x: 20
                                 TextArea {
                                     height: Screen.height/(heightItem_mobile + 4.5)
-                                    //font.pixelSize: 15
                                     id: textarea_item
                                     onTextChanged: push_aInputFormArray(Name,textarea_item.text,List,Type,req)
                                     Component.onCompleted: {
-                                        if(item2.visible === true)
+                                        if(itemTextArea.visible === true)
                                         {
                                         init_aInputFormArray(Name,textarea_item.text,List,Type,req);
                                         }
                                     }
                                 }
                                 }
-                    /*
-                        Checkbox nog niet werkend. Een listview nog aan koppelen om meerdere weer te geven.
-                        Idem maken voor radiobuttons
-                    */
+
                                 Rectangle {
                                     width: parent.width;
                                     color: "white"
@@ -484,12 +455,10 @@ Rectangle {
                                                 onClicked: {
                                                     if(checkbox_item.checked == true)
                                                     {
-                                                        console.log("Checked");
                                                          push_aCheckboxArray(Name,checkbox_item.text);
                                                     }
                                                     else
                                                     {
-                                                        console.log("niet meer checked");
                                                          pop_aCheckboxArray(Name,checkbox_item.text);
                                                     }
                                                 }
@@ -530,13 +499,11 @@ Rectangle {
                                             init_aInputFormArray(Name,combobox_item.currentText,List,Type,req)}
                                         }
                                         }
-
                                 }
-
                                 Rectangle {
-                                                height: 1
-                                                width: parent.width
-                                                color: "white"
+                                      height: 1
+                                      width: parent.width
+                                      color: "white"
                                             }
                     }
                 }
@@ -547,7 +514,7 @@ Rectangle {
                 anchors.top: parent.top
                 width: parent.width
                 height: 100
-                color: "red"
+                color: "#20445A"
 
                 Row {
                     id: logo
@@ -556,7 +523,7 @@ Rectangle {
                     anchors.centerIn: parent
 
                     spacing: 4
-
+                    //bron: iconarchive,http://www.iconarchive.com/show/ios7-icons-by-icons8/Arrows-Back-icon.html
                     Image {
                         id: backIcon
                         source: "qrc:/new/prefix1/Icons8-Ios7-Arrows-Back.ico"
@@ -567,7 +534,7 @@ Rectangle {
                         MouseArea {
                                 anchors.fill: parent
                                 onClicked: {
-                                    var component = Qt.createComponent("MyForms.qml")
+                                    var component = Qt.createComponent("MyFormsFinal.qml")
                                     if (component.status == Component.Ready) {
                                     var window    = component.createObject(main);
                                     window.show()
@@ -576,7 +543,7 @@ Rectangle {
                         }
                     }
                     Text {
-                        text: settings.current_form + ": " + settings.username
+                        text: settings.current_form
                         anchors.horizontalCenterOffset: -4
                         anchors.verticalCenter: parent.verticalCenter
                         anchors.verticalCenterOffset: -3
@@ -598,11 +565,9 @@ Rectangle {
                     model: enginioModel
                     delegate: listDelegate
                     clip: true
-                    //y: 20
                     visible: true
                     width: Screen.width
-                    height: Screen.height //- (actionbar.height)
-                    //anchors.fill: parent
+                    height: Screen.height
                     anchors.top : header.bottom
                     anchors.bottom: actionbar.top
                     // Animations
@@ -634,14 +599,14 @@ Rectangle {
                                  background: Rectangle {
                                      implicitWidth: 100
                                      implicitHeight: 25
-                                     color: "white"
-                                     border.width: 5//control.activeFocus ? 2 : 1
-                                     border.color: "red"
-                                     radius: 30
+                                     color: "#20445A"
+                                     border.width: 5
+                                     border.color: "#20445A"
+                                     radius: 0
 
                                      gradient: Gradient {
-                                         GradientStop { position: 0 ; color: control.pressed ? "white" : "white" }
-                                         GradientStop { position: 1 ; color: control.pressed ? "white" : "white" }
+                                         GradientStop { position: 0 ; color: control.pressed ? "#20445A" : "#20445A" }
+                                         GradientStop { position: 1 ; color: control.pressed ? "#20445A" : "#20445A" }
                                      }
                                  }
                              }
@@ -685,7 +650,6 @@ Rectangle {
            }
         }
             var a = {"user":user,"sessionID":aSessionID,"fieldname": fieldname, "formname":formname, "input":input,"list":list, "type":type,"req":requ};
-            console.log("init: " + fieldname +  ":" + input);
             aInputFormArray.push(a);
     }
 
@@ -702,17 +666,18 @@ Rectangle {
             var a = {"user":user,"sessionID":aSessionID,"fieldname": fieldname, "formname":formname, "input":input,"list":list, "type":type,"req":requ};
             if(input !== "" || (type ==="CheckBox" && list.length != 0))
             {
-                console.log(fieldname +  ":" + input);
             aInputFormArray.push(a);
             }
     }
 
-    function validateEmail2(email)
+    //validatie van email
+    function validateEmail(email)
     {
         var re = /\S+@\S+\.\S+/;
         return re.test(email);
     }
 
+    //test van de validatie om te kijken of de verplichte velden ook zijn ingevuld
     function testValidation()
     {
         for (var i =0; i < aInputFormArray.length; i++)
@@ -733,7 +698,7 @@ Rectangle {
 
             if(aInputFormArray[i].type === "Email" && aInputFormArray[i].type !== "")
              {
-                if(validateEmail2(aInputFormArray[i].input) === false)
+                if(validateEmail(aInputFormArray[i].input) === false)
                 {
                     messageDialog.text = "Fill in a valid Email";
                     return false;
@@ -743,6 +708,8 @@ Rectangle {
         }
         return true;
     }
+
+    //wegschrijven van de verzamelde data uit het formulier naar de database
     function writetoDatabase()
     {
         for (var i =0; i < aInputFormArray.length; i++)
@@ -760,7 +727,6 @@ Rectangle {
                        "user" : aInputFormArray[i].user
                    }
                 enginioModelResult.append(result);
-                console.log("Naar database: " + aInputFormArray[i].fieldname)
              }
             else
             {
@@ -775,30 +741,8 @@ Rectangle {
                        "user" : aInputFormArray[i].user
                    }
                 enginioModelResult.append(resultCheckbox);
-                console.log("Naar database: " + aInputFormArray[i].fieldname)
             }
            }
-    }
-
-   //bron : http://stackoverflow.com/questions/105034/create-guid-uuid-in-javascript
-
-    function createSessionID()
-    {
-      var lut = [];
-      for (var i=0; i<256; i++) { lut[i] = (i<16?'0':'')+(i).toString(16); }
-
-      var d0 = Math.random()*0xffffffff|0;
-      var d1 = Math.random()*0xffffffff|0;
-      var d2 = Math.random()*0xffffffff|0;
-      var d3 = Math.random()*0xffffffff|0;
-      console.log(lut[d0&0xff]+lut[d0>>8&0xff]+lut[d0>>16&0xff]+lut[d0>>24&0xff]+'-'+
-                  lut[d1&0xff]+lut[d1>>8&0xff]+'-'+lut[d1>>16&0x0f|0x40]+lut[d1>>24&0xff]+'-'+
-                  lut[d2&0x3f|0x80]+lut[d2>>8&0xff]+'-'+lut[d2>>16&0xff]+lut[d2>>24&0xff]+
-                  lut[d3&0xff]+lut[d3>>8&0xff]+lut[d3>>16&0xff]+lut[d3>>24&0xff]);
-      return lut[d0&0xff]+lut[d0>>8&0xff]+lut[d0>>16&0xff]+lut[d0>>24&0xff]+'-'+
-        lut[d1&0xff]+lut[d1>>8&0xff]+'-'+lut[d1>>16&0x0f|0x40]+lut[d1>>24&0xff]+'-'+
-        lut[d2&0x3f|0x80]+lut[d2>>8&0xff]+'-'+lut[d2>>16&0xff]+lut[d2>>24&0xff]+
-        lut[d3&0xff]+lut[d3>>8&0xff]+lut[d3>>16&0xff]+lut[d3>>24&0xff];
     }
 
     //bron: http://stackoverflow.com/questions/105034/create-guid-uuid-in-javascript

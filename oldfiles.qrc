@@ -1,0 +1,14 @@
+<RCC>
+    <qresource prefix="/">
+        <file>LoginEHB.qml</file>
+        <file>Database.js</file>
+        <file>EHBEditStudent.qml</file>
+        <file>EHBEditStudentTest.qml</file>
+        <file>EHBKeuzeMenu.qml</file>
+        <file>EHBNewStudent.qml</file>
+        <file>FormResults.qml</file>
+        <file>FormView.qml</file>
+        <file>Login.qml</file>
+        <file>main.qml</file>
+    </qresource>
+</RCC>

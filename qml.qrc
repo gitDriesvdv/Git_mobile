@@ -1,18 +1,8 @@
 <RCC>
     <qresource prefix="/">
-        <file>main.qml</file>
-        <file>FormView.qml</file>
-        <file>FormResults.qml</file>
-        <file>Login.qml</file>
-        <file>FormViewTest.qml</file>
+        <file>FormViewFinal.qml</file>
         <file>LoginContainer.qml</file>
-        <file>LoginTest.qml</file>
-        <file>MyForms.qml</file>
-        <file>LoginEHB.qml</file>
-        <file>EHBKeuzeMenu.qml</file>
-        <file>EHBEditStudent.qml</file>
-        <file>EHBNewStudent.qml</file>
-        <file>Database.js</file>
-        <file>EHBEditStudentTest.qml</file>
+        <file>LoginFinal.qml</file>
+        <file>MyFormsFinal.qml</file>
     </qresource>
 </RCC>

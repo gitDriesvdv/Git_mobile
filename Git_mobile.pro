@@ -8,8 +8,9 @@ SOURCES += main.cpp
 RESOURCES += qml.qrc \
     formicon.qrc \
     back_button.qrc \
-    header.qrc \
-    ehb-logo.qrc
+    loginimage.qrc \
+    listviewbackground.qrc \
+    oldfiles.qrc
 
 # Additional import path used to resolve QML modules in Qt Creator's code model
 QML_IMPORT_PATH =
