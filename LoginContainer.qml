@@ -18,10 +18,10 @@ Item {
         EnginioClient {
             id: enginioClient
             backendId: "54be545ae5bde551410243c3"
-
             onError: console.debug(JSON.stringify(reply.data))
         }
 
+        // login is geplaatst in een tabview. Indien deze zou worden uitgebreid met een registratie dan kan dit snel worden toegepast.
         TabView {
             id: tabView
             anchors.fill: parent

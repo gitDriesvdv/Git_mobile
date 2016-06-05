@@ -36,7 +36,7 @@ Rectangle {
         query: {
             "objectType": "objects.Form",
             "query" : { /*"User": settings.username, */"FormName" : settings.current_form},
-            "sort" : [ {"sortBy": "indexForm", "direction": "asc"} ]
+            "sort" : [ {"sortBy": "createdAt", "direction": "asc"} ]
         }
     }
 
@@ -504,7 +504,7 @@ Rectangle {
                                       height: 1
                                       width: parent.width
                                       color: "white"
-                                            }
+                                      }
                     }
                 }
             }
@@ -755,6 +755,7 @@ Rectangle {
         });
         return uuid;
     }
+
     function createArrayInCheckboxArray(naam)
     {
         var a = {"Name": naam, "List":[]};

@@ -4,20 +4,22 @@ import Enginio 1.0
 import QtQuick.Window 2.0
 import Qt.labs.settings 1.0
 import QtQuick.Controls 1.4
+//lijst met alle formulieren waar de gebruiker toegang tot heeft
 Rectangle {
     id: recMyForms
     property var aUniqueList: [];
     width: Screen.width
     height: Screen.height
     z:1
+
+    //bron: https://sameapk.com/wallpapers/nexus-colorful-stock-background/
     Image {
         id: background
         source: "qrc:/new/prefix1/nexus-colorful-stock-background-3723_image.jpg"
         anchors.fill: parent
     }
     Component {
-            id: contactDelegate
-
+            id: rowDelegate
             Rectangle{
                 id: rec
                 width: Screen.width; height: Screen.height/8
@@ -36,6 +38,7 @@ Rectangle {
                         onClicked: {
                             settings.current_form = name;
                             header.z = 0;
+                            //Navigeren aan de volgende pagina om een forulier volledig weer te geven
                             var component = Qt.createComponent("FormViewFinal.qml")
                             if (component.status == Component.Ready) {
                             var window    = component.createObject(recMyForms);
@@ -101,8 +104,7 @@ Rectangle {
         anchors.top: header.bottom
         anchors.bottom: footer.top
         model: listForms
-
-        delegate: contactDelegate
+        delegate: rowDelegate
         Component.onCompleted: getDataUserForms(settings.username);
     }
 
@@ -120,6 +122,7 @@ Rectangle {
         }
     }
 
+    //ophalen van alle formulieren voor de ingelogde gebruiker
     function getDataUserForms(formname_input) {
         var xmlhttp = new XMLHttpRequest();
         var url = "https://api.engin.io/v1/users?q={\"username\":\""+ formname_input +"\"}&limit=1"
